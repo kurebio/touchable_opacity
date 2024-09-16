@@ -21,6 +21,8 @@ class TouchableOpacity extends StatefulWidget {
     Key? key,
     required this.child,
     this.activeOpacity = 0.2,
+    this.animationDuration = const Duration(milliseconds: 100),
+    this.animationReverseDuration = const Duration(milliseconds: 100),
     this.onTapDown,
     this.onTapUp,
     this.onTap,
@@ -100,6 +102,12 @@ class TouchableOpacity extends StatefulWidget {
   /// down event is registered. Defaults to 0.2, value must be between 1.0 and
   /// 0.0 .
   final double activeOpacity;
+
+  /// The duration of the opacity animation.
+  final Duration animationDuration;
+
+  /// The duration of the opacity animation when it is reversed.
+  final Duration animationReverseDuration;
 
   /// A pointer that might cause a tap has contacted the screen at a particular
   /// location.
@@ -318,7 +326,8 @@ class _TouchableOpacityState extends State<TouchableOpacity>
     super.initState();
     _controller = AnimationController(
         vsync: this,
-        duration: Duration(milliseconds: 100),
+        duration: widget.animationDuration,
+        reverseDuration: widget.animationReverseDuration,
         lowerBound: widget.activeOpacity,
         upperBound: 1.0,
         value: 1.0);
